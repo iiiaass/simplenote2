@@ -26,6 +26,9 @@ class HomeController extends Controller
     public function index()
     { 
         $user = \Auth::user();  //ログインしているユーザーの情報を$userに代入
+        // find idしか検索できないかつ一件しか持ってこれない
+        // find_by　id以外のカラムを検索できるかつ一件しか持ってこれない
+        // where　条件が一致すれば複数取って来れる
         $memos = Memo::where('user_id' , $user['id'])->where('status' ,1)->orderby('updated_at','DESC')->get();  //自分が所有しているメモ,かつstatusが１のメモを取得する    //where->取ってくるデータの条件を指定できる   //orderby->並べ方を指定できる(ASC=昇順、DESC=降順)   
         return view('create',compact('user','memos'));   //conpactを使うことによって$userの情報をviewで使うことが出来る
     }                                                   
@@ -51,5 +54,15 @@ class HomeController extends Controller
 
         // リダイレクト処理->別のページへ遷移すること
         return redirect()->route('home');
+    }
+
+    public function edit($id) //$id->URLパラメータの事  
+    {
+        $user = \Auth::user();  //ログインしているユーザーの情報を$userに代入
+        $memos = Memo::where('user_id' , $user['id'])->where('status' ,1)->orderby('updated_at','DESC')->get();  //自分が所有しているメモ,かつstatusが１のメモを取得する    //where->取ってくるデータの条件を指定できる   //orderby->並べ方を指定できる(ASC=昇順、DESC=降順)   
+        $memo = Memo::where('status', 1)->where('id', $id)->where('user_id', $user['id'])  //statusが1かつ、memosテーブルのidがURLパラメータ（URLの数字）と同じものかつ、userのidが今ログインしているuserのidと一致すること
+          ->first();    //first->条件が一致した物を一行だけ取ってくるメソッド
+        //dd($memo);
+        return view('edit',compact('user','memos','memo'));   //conpactを使うことによって$userの情報をviewで使うことが出来る
     }
 }
