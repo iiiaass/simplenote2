@@ -52,7 +52,7 @@ class HomeController extends Controller
              'status' => 1
         ]); 
 
-        // リダイレクト処理->別のページへ遷移すること
+        // リダイレクト処理->別のページへ遷移することaaa
         return redirect()->route('home');
     }
 
