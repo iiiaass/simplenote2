@@ -74,7 +74,10 @@
                 </div>
             </div>
         </nav>
-
+        <h4>メモ一覧<h4>
+        @foreach($memos as $memo)    <!--foreach-> 配列の数だけ($memos)分解して($memo)ループしてくれる関数--> 
+            <a href="/edit/{{ $memo['id'] }}">{{ $memo['content'] }}</a>   <!--HTMLタグの中にPHPを出力する時は、{{}}で囲む-->
+        @endforeach
         <main class="py-4">
             @yield('content')
         </main>
