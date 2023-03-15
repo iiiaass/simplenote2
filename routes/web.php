@@ -24,4 +24,5 @@ Route::get('/create', [App\Http\Controllers\HomeController::class, 'create'])->n
 Route::post('/store', [App\Http\Controllers\HomeController::class, 'store'])->name('store');
 Route::get('/edit/{id}', [App\Http\Controllers\HomeController::class, 'edit'])->name('edit');
 Route::post('/update/{id}', [App\Http\Controllers\HomeController::class, 'update'])->name('update');
+Route::get('/delete/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');
 Route::post('/delete/{id}', [App\Http\Controllers\HomeController::class, 'delete'])->name('delete');

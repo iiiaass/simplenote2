@@ -46,7 +46,7 @@ class HomeController extends Controller
         //dd($data);    //dd->その$dataの中身を分解して画面で確認できる
         // POSTされたデータをDB（memosテーブル）に挿入
         // MEMOモデルにDBへ保存する命令を出す
-        $memo_id = Memo::insertGetId([   //insert それぞれデータを定義して、データベースに挿入していっている
+        Memo::insertGetId([   //insert それぞれデータを定義して、データベースに挿入していっている
             'content' => $data['content'],
              'user_id' => $data['user_id'], 
              'status' => 1
@@ -72,5 +72,18 @@ class HomeController extends Controller
         //dd($inputs);
         Memo::where('id',$id)->update(['content'=> $inputs['content']]);   //whereでどこをupdateするのか指定する。idはURLパラメータに入っているもの、そのあとupdateしたい内容を配列で指定。contentの内容を更新したいので$inputsのcontentの内容に更新します。という意味
         return redirect()->route('home');   // リダイレクト処理->別のページへ遷移すること
+    }
+
+    public function delete(Request $request, $id)
+    {
+        $inputs = $request->all();
+        //dd($inputs);
+        // 論理削除なので、status=2
+        Memo::where('id', $id)->update([ 'status' => 2 ]);
+        // // ↓は物理削除
+        // // Memo::where('id', $id)->delete();
+        //                                                     //フラッシュメッセージ
+        return redirect()->route('home')->with('success', 'メモの削除が完了しました！');
+        
     }
 }

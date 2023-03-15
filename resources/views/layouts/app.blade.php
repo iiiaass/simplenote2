@@ -74,6 +74,9 @@
                 </div>
             </div>
         </nav>
+        @if(session('success'))
+              {{ session('success')}}     <!--フラッシュメッセージ-->
+        @endif
         <h4>メモ一覧<h4>
         @foreach($memos as $memo)    <!--foreach-> 配列の数だけ($memos)分解して($memo)ループしてくれる関数--> 
             <a href="/edit/{{ $memo['id'] }}">{{ $memo['content'] }}</a>   <!--HTMLタグの中にPHPを出力する時は、{{}}で囲む-->
